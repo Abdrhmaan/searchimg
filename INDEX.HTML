@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>serch-img</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <h1>Image searrch Engine</h1>
+    <form id="form-search">
+        <input type="text" placeholder="search" id="text">
+       
+        <button >Search</button>
+    </form>
+
+
+    <div id="serch-result">
+    
+
+    </div>
+    <button id="show-more">Show</button>
+
+
+
+    <script>
+
+
+let inpuut = document.getElementById("text")
+
+  console.log(inpuut)
+
+ 
+
+const AccessKey = "cpE5GtZ5Hl0WmkZxfCC4PHy8xH_YQpvi8LLiZImGNv8"
+
+console.log(AccessKey)
+// kani waa form dhan
+let serchFORM = document.getElementById("form-search")
+// kania input waxa ku jira
+let searcbox = document.getElementById("text")
+console.log(serchFORM)
+let serchreault =document.getElementById("serch-result")
+console.log(serchreault)
+let ShoWmore = document.getElementById("show-more")
+console.log(ShoWmore)
+   
+let ketypwrd = ""
+let page =1
+
+
+
+
+   async  function serchimg (e) {
+
+  // input wax ku jira
+   let ketypwrd =  searcbox.value 
+
+    const url = `https://api.unsplash.com/search/photos?page=${page}&query=${ketypwrd}&client_id=${AccessKey}`
+
+    const responce = await fetch(url)
+    const data = await responce.json()
+
+  
+      
+       const results = data.results
+       if(page === 1){
+      serchreault.innerHTML = ""
+    }
+      
+       results.map((result => {
+        console.log(result)
+        //img bu sameeyy
+        const img = document.createElement("img")
+        img.src = result.urls.small
+
+        console.log(img)
+
+
+        const imgLINK = document.createElement("a")
+        imgLINK.href = result.links.html
+        console.log(imgLINK)
+        imgLINK.target = "_blank"
+
+        imgLINK.appendChild(img)
+        serchreault.appendChild(imgLINK)
+
+
+       })) 
+       ShoWmore.style.display = "block"
+     
+
+
+
+      
+
+   }
+     
+   serchFORM.addEventListener("submit" , (e) => {
+
+
+    e.preventDefault();
+    page =1
+    serchimg()
+
+
+
+
+
+
+   })
+
+   ShoWmore.addEventListener("click" , (e) => {
+
+    page++
+    serchimg()
+
+
+
+   })
+
+
+
+//https://api.unsplash.com/search/photos?page=1&query=office>
+
+    </script>
+    
+</body>
+</html>
